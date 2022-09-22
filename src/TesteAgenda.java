@@ -271,10 +271,5 @@ public class TesteAgenda {
             System.out.println("falha ao se conectar ao banco postgresSQL");
             e.printStackTrace();
         }
-
-
-
-
-
     }
 }
