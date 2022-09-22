@@ -101,29 +101,6 @@ public class CustomersService {
         return customerFound;
     }
     
-//    public Customer addCustomer(Customer customer) throws InvalidFormatException, AlreadyExistsException {
-//
-//        if(!isCpfValid(customer.getCpf())){
-//            throw new InvalidFormatException("Usuário não cadastrado. CPF inválido.");
-//        }
-//
-//        if(checkCpfExist(customer.getCpf())){
-//            throw new AlreadyExistsException("Usuário não cadastrado. CPF já existe.");
-//        }
-//
-//        if(!isEmailValid(customer.getEmail())){
-//            throw new InvalidFormatException("Usuário não cadastrado. E-mail inserido não é válido");
-//        }
-//
-//        if(!areTelephonesValids(customer.getTelephones())){
-//            throw new InvalidFormatException("O número de telefone inserido está incorreto.");
-//        }
-//
-//        customerList.add(customer);
-////        System.out.println("Usuário cadastrado com sucesso!");
-//        return customer;
-//    }
-
     public Customer addCustomer(Customer customer) throws InvalidFormatException, AlreadyExistsException, SQLException {
 
 
@@ -153,9 +130,7 @@ public class CustomersService {
 
         Long id = 0L;
 
-        // check the affected rows
         if (affectedRows > 0) {
-            // get the ID back
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     id = rs.getLong(1);
@@ -196,37 +171,6 @@ public class CustomersService {
 
         return customer;
     }
-
-//    public Customer editCustomer(String customerToChangeCpf, Customer customerChanges) throws NotFoundException, InvalidFormatException {
-//
-//        customerList.stream()
-//                .filter(customer -> customer.getCpf().equals(customerToChangeCpf))
-//                .forEach(customer -> {
-//                    if(!isEmailValid(customerChanges.getEmail()))
-//                        try {
-//                            throw new InvalidFormatException("E-mail não pode ser salvo. E-mail inserido não é válido.");
-//                        } catch (InvalidFormatException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    if(!areTelephonesValids(customerChanges.getTelephones())){
-//                        try {
-//                            throw new InvalidFormatException("O número de telefone inserido está incorreto.");
-//                        } catch (InvalidFormatException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    }
-//
-//                    customer.setTelephones(customerChanges.getTelephones());
-//                    customer.setEmail(customerChanges.getEmail());
-//                    customer.setFullName(customerChanges.getFullName());
-//                    customer.setBirthDate(customerChanges.getBirthDate());
-//                    customer.setAddresses(customerChanges.getAddresses());
-//                });
-//
-//        System.out.println(customerList);
-//
-//        return customerChanges;
-//    }
 
     public Customer editCustomer(String customerToChangeCpf, Customer customerChanges) throws NotFoundException, InvalidFormatException, SQLException {
 
@@ -330,7 +274,6 @@ public class CustomersService {
                 .anyMatch(customer -> customer.getCpf().equals(cpf));
     }
 
-    //valida se campo email esta correto
     private boolean isEmailValid(String email){
         if (email != null && email.length() > 0) {
             String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -343,8 +286,7 @@ public class CustomersService {
         return false;
     }
 
-    //valida se campo telefone esta correto
-    private boolean isTelephoneValid(String telephone){
+     private boolean isTelephoneValid(String telephone){
         telephone = telephone.replaceAll("\\D", "");
 
         if(!(telephone.length() >= 10 && telephone.length() <= 11)){
@@ -382,7 +324,6 @@ public class CustomersService {
         return true;
     }
 
-    //valida se cpf esta correto
     private boolean isCpfValid(String cpf){
 
         return cpf.matches("([0-9]{2}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[\\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})");
